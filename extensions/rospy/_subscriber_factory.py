@@ -33,7 +33,7 @@ class SubscriberFactory:
     #   Public Methods
     #
     # ==================================================================================================================
-    def create(self):
+    def create(self) -> rospy.Subscriber:
         if self._callback_latest:
             return ThreadSubscriber(self._callback, self._topic, self._data_class, queue_size=self._queue_size)
 
@@ -48,7 +48,7 @@ class ThreadSubscriber(rospy.Subscriber):
     _msg_queue: (genpy.Message | None)
     _thread: (threading.Thread | None)
 
-    def __init__(self, callback, *args, **kwargs):
+    def __init__(self, callback: Callable, *args, **kwargs) -> None:
         super(ThreadSubscriber, self).__init__(*args, **kwargs)
         self._lock = threading.Lock()
         self._callback = callback
@@ -61,7 +61,7 @@ class ThreadSubscriber(rospy.Subscriber):
     #   Override Methods
     #
     # ==================================================================================================================
-    def unregister(self):
+    def unregister(self) -> None:
         super(ThreadSubscriber, self).unregister()
         self._unregister_request = True
         self._thread.join()
