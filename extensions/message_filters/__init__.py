@@ -1,1 +1,1 @@
-from ._approximate_time_synchronizer_factory import *
+from ._approximate_time_synchronizer_builder import *
